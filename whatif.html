@@ -5,7 +5,13 @@
     <title>$coin</title>
   </head>
   <body>
-    <div><input type="dropbox" /><input type="text" /></div>
-    <div><input type="text" /></div>
+    <div>
+      <select name="coin" id="c">
+        <!-- value는 서버로 제출되는 값 -->
+        <option value="btc">btc</option>
+      </select>
+      <input type="date">
+      <input type="text" placeholder="투자했었을(?) 금액"/> 
+      <button>계산</button>
   </body>
 </html>
