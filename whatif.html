@@ -23,12 +23,10 @@ let day = document.getElementById("date");
   console.log(timestamp);
   fetch(
     "https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=USD&ts=" +
-      `${timestamp}`
+      `${timestamp}`+"&calculationType=MidHighLow"
   )
     .then((r) => r.json())
     .then((j) => console.log(j));
-  fetch(
-  "https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD,JPY,EUR").then((r) => r.json()).then((j) => console.log(j))
 });
   </script>`
 </html>
