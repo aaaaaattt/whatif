@@ -10,8 +10,25 @@
         <!-- value는 서버로 제출되는 값 -->
         <option value="btc">btc</option>
       </select>
-      <input type="date">
+      <input id="date"  type="date">
       <input type="text" placeholder="투자했었을(?) 금액"/> 
-      <button>계산</button>
+      <button id="btn">계산</button>
   </body>
+  <script>
+    //btn클릭 시 date 날짜를 timestamp로 변환
+let timestamp;
+let day = document.getElementById("date");
+  document.getElementById("btn").addEventListener("click", (e) => {
+  timestamp = new Date(day.value).getTime()/1000;
+  console.log(timestamp);
+  fetch(
+    "https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=USD&ts=" +
+      `${timestamp}`
+  )
+    .then((r) => r.json())
+    .then((j) => console.log(j));
+  fetch(
+  "https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD,JPY,EUR").then((r) => r.json()).then((j) => console.log(j))
+});
+  </script>`
 </html>
