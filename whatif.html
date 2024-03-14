@@ -11,7 +11,7 @@
         <option value="btc">btc</option>
       </select>
       <input id="date" type="date" />
-      <input id="investment" type="text" placeholder="투자했었을(?) 금액" />
+      <input id="investment" type="text" placeholder="투자 금액(₩)" />
       <button id="btn">계산</button>
     </div>
 
@@ -20,24 +20,5 @@
     </div>
     <script defer src="temp.js"></script>
   </body>
-  <script>
-    //순이익/투자 비용 x 100
-    document.getElementById("btn").addEventListener("click", (e) => {
-      fetch(
-        "https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=USD"
-      )
-        .then((r) => r.json())
-        .then((j) => {
-          const btcprice = j.BTC.USD;
-          let li = document.createElement("li");
-          li.innerHTML = btcprice;
-          res.appendChild(li);
-        });
-      //fetch 연이어서 사용 X
-      //fetch 안에서 태그 value 직접 수정 안되서 우회함
-      //then 안의 변수는 다음 then에서 사용X
-      //fetch 함수 분리 X 클릭 버튼 눌러야 fetch가 date에서 timestamp를 날짜에서 받기 때문에
-      //-->현재 값만 분리?
-    });
-  </script>
+  <script></script>
 </html>
