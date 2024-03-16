@@ -6,10 +6,12 @@
   </head>
   <body>
     <div>
-      <select id="here" name="coin" id="c">
-        <!-- value는 서버로 제출되는 값 -->
-        <option value="btc">btc</option>
-      </select>
+      <!-- <select id="here" name="coin" id="c"> -->
+      <!-- value는 서버로 제출되는 값 -->
+      <!-- <option value="btc">btc</option> -->
+      <!-- </select> -->
+      <input list="coinlist" id="coins" name="coins" placeholder="가상자산명" />
+      <datalist id="coinlist"> </datalist>
       <input id="date" type="date" />
       <input id="investment" type="text" placeholder="투자 금액(₩)" />
       <button id="btn">계산</button>
