@@ -21,7 +21,7 @@ fetchCoinList().then((coinList) => {
     let selectElement = document.getElementById("coinlist");
 
     CoinList.forEach((coinName) => {
-      console.log(coinName, selectElement);
+      // console.log(coinName, selectElement);
       let optionElement = document.createElement("option");
       optionElement.text = coinName;
       selectElement.appendChild(optionElement);
