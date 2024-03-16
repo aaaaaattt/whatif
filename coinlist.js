@@ -16,6 +16,7 @@ async function fetchCoinList() {
 
 fetchCoinList().then((coinList) => {
   if (coinList) {
+    console.log(coinList);
     let CoinList = Object.keys(coinList);
 
     let selectElement = document.getElementById("coinlist");

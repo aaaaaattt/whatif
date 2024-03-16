@@ -16,7 +16,7 @@ document.getElementById("btn").addEventListener("click", async () => {
     const btcResponse = await fetch(
       "https://min-api.cryptocompare.com/data/pricehistorical?fsym=" +
         `${cryptoName}` +
-        "&tsyms=KRW&ts=" +
+        "&tsyms=USD&ts=" +
         `${timestamp}`
     );
 
@@ -25,9 +25,7 @@ document.getElementById("btn").addEventListener("click", async () => {
       throw new Error("Failed to fetch Bitcoin price");
     }
     const btcData = await btcResponse.json();
-    console.log(btcData[cryptoName]["KRW"]);
-    const btcprice = Math.floor(btcData[cryptoName]["KRW"]);
-    console.log(btcprice);
+    const btcprice = Math.floor(btcData[cryptoName]["USD"]);
 
     //현재 가격
     const currentPriceResponse = await fetch(
@@ -42,13 +40,14 @@ document.getElementById("btn").addEventListener("click", async () => {
     }
 
     const currentPriceData = await currentPriceResponse.json();
-    const currentPrice = Math.floor(currentPriceData[cryptoName]["KRW"]);
+    const currentPrice = Math.floor(currentPriceData[cryptoName]["USD"]);
 
     const profitPercentage =
       Math.floor(((currentPrice - btcprice) / btcprice) * 100) / 100;
-    console.log(profitPercentage, "aaaa", btcprice, "aaaa", currentPrice);
     const investmentInput = document.getElementById("investment");
-    const result = investmentInput.value * (1 + profitPercentage);
+    const result = Math.floor(
+      (investmentInput.value / 1300) * (1 + profitPercentage)
+    );
 
     //이번 결과 초기화
     while (res.firstChild) {
