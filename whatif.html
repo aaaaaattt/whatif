@@ -3,24 +3,98 @@
   <head>
     <meta charset="UTF-8" />
     <title>$coin</title>
+    <!-- Chart.js를 로드 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
     <div>
-      <!-- <select id="here" name="coin" id="c"> -->
-      <!-- value는 서버로 제출되는 값 -->
-      <!-- <option value="btc">btc</option> -->
-      <!-- </select> -->
       <input list="coinlist" id="coins" name="coins" placeholder="가상자산명" />
-      <datalist id="coinlist"> </datalist>
+      <datalist id="coinlist"></datalist>
       <input id="date" type="date" />
       <input id="investment" type="text" placeholder="투자 금액(₩)" />
       <button id="btn">계산</button>
+      <!-- 차트를 보여줄 캔버스 요소 -->
     </div>
 
     <div>
       <ul id="authors"></ul>
     </div>
-    <script defer src="ExchangeRate.js"></script>
+
+    <canvas id="priceChart"></canvas>
+
+    <script>
+      document.getElementById("btn").addEventListener("click", () => {
+        const selectedDate = new Date(document.getElementById("date").value);
+        const coinSymbol = document.getElementById("coins").value;
+
+        // 시작일과 종료일 설정
+        const oneWeekAgo = new Date(selectedDate);
+        oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+        const oneWeekAfter = new Date(selectedDate);
+        oneWeekAfter.setDate(oneWeekAfter.getDate() + 7);
+        const startDate = Math.floor(oneWeekAgo.getTime() / 1000);
+        const endDate = Math.floor(oneWeekAfter.getTime() / 1000);
+
+        fetch(
+          `https://min-api.cryptocompare.com/data/v2/histoday?fsym=${coinSymbol}&tsym=KRW&limit=14&toTs=${endDate}&aggregate=1`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            // 가격 데이터 추출
+            const prices = data.Data.Data.map((item) => item.close);
+
+            // 차트 데이터셋 업데이트
+            const ctx = document.getElementById("priceChart").getContext("2d");
+            const chart = new Chart(ctx, {
+              type: "line",
+              data: {
+                labels: [
+                  "7 days ago",
+                  "6 days ago",
+                  "5 days ago",
+                  "4 days ago",
+                  "3 days ago",
+                  "2 days ago",
+                  "1 days ago",
+                  "투자한 날(?)",
+                  "1 days later",
+                  "2 days later",
+                  "3 days later",
+                  "4 days later",
+                  "5 days later",
+                  "6 days later",
+                ],
+                datasets: [
+                  {
+                    label: "Price (KRW)",
+                    data: prices,
+                    backgroundColor: "rgba(75, 192, 192, 0.2)",
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    borderWidth: 1,
+                    pointBackgroundColor: prices.map((price, index) => {
+                      // "투자한 날(?)"" 레이블에 해당하는 데이터 포인트만 빨간색으로 표시
+                      if (index === 7) return "red";
+                      else return "rgba(75, 192, 192, 1)"; // 나머지는 원래 색상 유지
+                    }),
+                  },
+                ],
+              },
+              options: {
+                scales: {
+                  yAxes: [
+                    {
+                      ticks: {
+                        beginAtZero: true,
+                      },
+                    },
+                  ],
+                },
+              },
+            });
+          })
+          .catch((error) => console.error("Error fetching data:", error));
+      });
+    </script>
     <script defer src="temp.js"></script>
     <script defer src="coinlist.js"></script>
     <script defer src="api.js"></script>

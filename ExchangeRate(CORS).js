@@ -1,4 +1,4 @@
-//CORS (Cross-Origin Resource Sharing) 정책에 위배되므로 잠시 보류
+//CORS (Cross-Origin Resource Sharing) 정책에 위배되므로... 보류
 
 // let er = 0;
 // fetch(

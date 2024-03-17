@@ -16,13 +16,11 @@ async function fetchCoinList() {
 
 fetchCoinList().then((coinList) => {
   if (coinList) {
-    console.log(coinList);
     let CoinList = Object.keys(coinList);
 
     let selectElement = document.getElementById("coinlist");
 
     CoinList.forEach((coinName) => {
-      // console.log(coinName, selectElement);
       let optionElement = document.createElement("option");
       optionElement.text = coinName;
       selectElement.appendChild(optionElement);

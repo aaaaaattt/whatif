@@ -4,14 +4,11 @@ let day = document.getElementById("date");
 
 //가상 자산 이름 가져오기
 let crypto = document.getElementById("coins");
-
 document.getElementById("btn").addEventListener("click", async () => {
   try {
     const timestamp = parseInt(new Date(day.value).getTime() / 1000);
-
     //가상자산명
     let cryptoName = crypto.value;
-
     //과거 가격
     const btcResponse = await fetch(
       "https://min-api.cryptocompare.com/data/pricehistorical?fsym=" +
@@ -19,7 +16,6 @@ document.getElementById("btn").addEventListener("click", async () => {
         "&tsyms=USD&ts=" +
         `${timestamp}`
     );
-
     //과거 가격 불러오기 Error 발생
     if (!btcResponse.ok) {
       throw new Error("Failed to fetch Bitcoin price");
@@ -31,7 +27,7 @@ document.getElementById("btn").addEventListener("click", async () => {
     const currentPriceResponse = await fetch(
       "https://min-api.cryptocompare.com/data/pricehistorical?fsym=" +
         `${cryptoName}` +
-        "&tsyms=KRW"
+        "&tsyms=USD"
     );
 
     //현재 가격 불러오기 Error 발생
@@ -45,9 +41,7 @@ document.getElementById("btn").addEventListener("click", async () => {
     const profitPercentage =
       Math.floor(((currentPrice - btcprice) / btcprice) * 100) / 100;
     const investmentInput = document.getElementById("investment");
-    const result = Math.floor(
-      (investmentInput.value / 1300) * (1 + profitPercentage)
-    );
+    const result = Math.floor(investmentInput.value * (1 + profitPercentage));
 
     //이번 결과 초기화
     while (res.firstChild) {
@@ -55,7 +49,14 @@ document.getElementById("btn").addEventListener("click", async () => {
     }
 
     const resultDiv = document.createElement("div");
-    resultDiv.innerText = result;
+    let rate = ((result - investmentInput.value) / investmentInput.value) * 100;
+    resultDiv.innerText =
+      "그 날 투자했다면.. 지금은 " +
+      result +
+      "원(" +
+      rate.toFixed(0) +
+      "%) 입니다.";
+
     res.appendChild(resultDiv);
   } catch (error) {
     console.error("An error occured: ", error);
