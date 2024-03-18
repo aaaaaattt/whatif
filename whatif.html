@@ -5,6 +5,7 @@
     <title>$coin</title>
     <!-- Chart.js를 로드 -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
     <div>
@@ -13,15 +14,10 @@
       <input id="date" type="date" />
       <input id="investment" type="text" placeholder="투자 금액(₩)" />
       <button id="btn">계산</button>
-      <!-- 차트를 보여줄 캔버스 요소 -->
-    </div>
-
-    <div>
       <ul id="authors"></ul>
     </div>
 
     <canvas id="priceChart"></canvas>
-
     <script>
       document.getElementById("btn").addEventListener("click", () => {
         const selectedDate = new Date(document.getElementById("date").value);
